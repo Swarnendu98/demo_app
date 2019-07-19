@@ -1,6 +1,8 @@
 import React ,{Component }from "react";
-import { View, Text ,Button,Image,StatusBar,TouchableOpacity} from "react-native";
-import logo from './images/9922.png'
+import { View, Text ,Button,Image,StatusBar,TouchableOpacity,ScrollView} from "react-native";
+import logo from './images/home.png'
+import AsyncStorage from "@react-native-community/async-storage";
+import DataForm from "./dataform";
 
 class HomeScreen extends React.Component {
 
@@ -11,61 +13,58 @@ class HomeScreen extends React.Component {
           return <Image
           source ={logo}
           style={{width :30,height :30}}
-          />
-    
-        },
-        title : 'Home',
-        
-        headerStyle:{
-            backgroundColor :"#df78ef"
-        },
-        headerTintColor :'#ffffff',
-        headerLeft :(
-        <TouchableOpacity 
-        onPress= {()=>navigation.navigate('Users')}
-        >
-        <Image
-        source = {logo}
-        style = {{height :20 ,width :20,marginLeft  : 5}}
-        
-        />
-        </TouchableOpacity>),
+          />},
+          tabBarOptions: {
+           activeTintColor: 'tomato',
+          }
 
-
-
-// headerRight :(
-//   <TouchableOpacity 
-//   onPress= {()=>navigation.navigate('Users')}
-//   >
-//   <Image
-//   source = {logo}
-//   style = {{height :20 ,width :20,marginRight  : 5}}
-  
-//   />
-//   </TouchableOpacity>)
-        
+      }
     }
-  }
+      
+  
   
 
   render() {
     return (
       
 
-      
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" ,backgroundColor :"#e1bee7"}}>
-              <StatusBar  backgroundColor = "#790e8b"/>
+      //mainview
+      <View style={{ flex: 1,backgroundColor :"#fff"}}>
+              <StatusBar  backgroundColor = "#000051"/>
 
-        <Text>Home Screen</Text>
-        <View style={{width :"80%"}}>
-        <Button 
-        style = {{width :"80%"}}
-        title = "Go to users"
-        onPress={
-            ()=>this.props.navigation.navigate('Users') 
-        }
-        />
+
+        {/* header */}
+        <View style={{width :"100%",marginTop:10,height :50,flexDirection :'row',borderBottomColor: 'black',
+    borderBottomWidth: 1,}}>
+        <View style={{flex :1,padding :8}}>
+          <Text style={{fontSize :24,color :"#1a237e ",fontWeight :"400",alignSelf:'center'}}>
+          WELCOME !!
+          </Text>
         </View>
+        <View style = {{flex:1}}>
+        <TouchableOpacity style={{width : 100,height: 43,backgroundColor : "#1a237e",padding :5,
+        marginRight:5,borderRadius :20,alignSelf:'flex-end'}}
+        onPress={
+          ()=>{this.props.navigation.navigate('Auth') 
+          AsyncStorage.setItem('log','0')
+        }
+      }
+        >
+          <Text style ={{color :'#ffffff',textAlign:'center',fontSize:20}}>
+            Logout
+          </Text>
+        </TouchableOpacity>
+        </View>
+        </View>
+
+        {/* body */}
+
+        <ScrollView style={{height :"100%",width :"100%",paddingVertical :20}}>
+          <DataForm nav = {this.props.navigation}/>
+          
+
+        </ScrollView>
+
       </View>
     );
   }

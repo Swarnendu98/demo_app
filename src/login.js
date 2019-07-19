@@ -5,6 +5,13 @@ import logo1 from './images/panda.png'
 import LoginForm from "./loginform"
 
 class LoginScreen extends React.Component {
+    constructor(Props){
+        super(Props)
+            this.state={
+                nav: this.props.navigation
+            }
+        
+    }
 
 
     static navigationOptions =({navigation})=> {
@@ -48,7 +55,7 @@ headerRight :(
                 <Text style = {styles.title}>Login</Text>
             </View>
             <View style = {styles.formComtainer }>
-                <LoginForm/>
+                <LoginForm   nav = {this.props.navigation}/>
 
             </View>
 

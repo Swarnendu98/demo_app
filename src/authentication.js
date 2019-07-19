@@ -1,29 +1,56 @@
 import React ,{Component }from "react";
-import { StyleSheet,ActivityIndicator,View,Text} from "react-native";
-import {AsyncStorage} from '@react-native-community/async-storage'
+import { StyleSheet,ActivityIndicator,View,Text , Alert} from "react-native";
+import AsyncStorage from '@react-native-community/async-storage'
 
 
 class AuthLoadingScreen extends React.Component{
 
     constructor(props){
         super(props);
-        this._loadData();
+        //this._loadData();
     }
+
+    componentWillMount(){
+        var init= AsyncStorage.getItem('log')
+        if(init==null||typeof(init)==''||init==''){
+            AsyncStorage.setItem('log','0')
+        }
+        AsyncStorage.getItem('log').then((result)=>{
+            if(result){
+                try{
+                    const val = result;
+                    //alert("data"+val)
+                    this.props.navigation.navigate(val !='1'? 'Auth': 'App')
+                }
+                catch(e){
+
+                }
+            }
+        })
+    }
+
     render(){
         return(
             <View style= {styles.container}>   
-            <ActivityIndicator/>
-            <Text>Auth</Text>
-
+            <ActivityIndicator size ='large' color ='red'/>
+            {/* <Text>Auth</Text> */}
+            
             </View>
 
         );
     }
-    _loadData = async()=>{
-        const logged = await AsyncStorage.getItem('log');
-        this.props.navigation.navigate(logged !=='1'? 'Auth': 'App')
+   
+    // _loadData(){
+    //     const logged = AsyncStorage.getItem('log');
+    //     if(typeof(logged)=='object')
+    //     {
+    //         logged='0'
+    //     }
+    //     alert('data='+logged)
+        
+    //     this.props.navigation.navigate(logged !=='1'? 'Auth': 'App')
 
-    }
+    // }
 }
 
 
@@ -32,7 +59,9 @@ const styles = StyleSheet.create({
     container : {
         
         width : 350,
-        padding : 20 
+        padding : 20 ,
+        alignItems :'center',
+        justifyContent :'center'
     },
     input :{
         height :40 ,

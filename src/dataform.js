@@ -2,40 +2,63 @@ import React ,{Component }from "react";
 import { StyleSheet,View, Text ,Button,Image,StatusBar,TouchableOpacity,TextInput} from "react-native";
 import AsyncStorage from '@react-native-community/async-storage'
 import {AsyncStorageStatic} from '@react-native-community/async-storage'
+import {DateTimePicker} from 'react-native-modal-datetime-picker'
 
 
 
-const UserInfo ={username :'admin',password:'12345'}
 
-class LoginForm extends Component {
+
+
+class DataForm extends Component {
 
             constructor (props){
                 super(props);
                 this.state= {
-                    username :"",
-                    password : "",
-                    nav: this.props.nav
+                    first_name :"",
+                    last_name : "",
+                    nav: this.props.nav,
+                    isDateTimePickerVisible: false,
+                    DATE :""
                 }
             }
+
+
+
+            showDateTimePicker = () => {
+                this.setState({ isDateTimePickerVisible: true });
+              };
+             
+              hideDateTimePicker = () => {
+                this.setState({ isDateTimePickerVisible: false });
+              };
+             
+              handleDatePicked = date => {
+                console.log("A date has been picked: ", date);
+                this.hideDateTimePicker();
+              };
+
+
 
     render(){
         return(
             <View style = {styles.container}>
-                <TextInput style = {styles.input} placeholder = "UserName or E-mail" maxLength = {20} returnKeyType ="next"
-                onSubmitEditing= {()=>this.passwordInput.focus()} keyboardType = "email-address" autoCapitalize ="none" autoCorrect ={false}
-                onChangeText = {(username)=>this.setState({username})}
-                value= {this.state.username}/>
-                <TextInput style = {styles.input} placeholder = "Password" maxLength = {12} secureTextEntry = {true} returnKeyType ="go"
-                ref= {(input)=>this.passwordInput= input}
-                onChangeText = {(password)=>this.setState({password})}
-                value= {this.state.password}
-                />
+                <TextInput style = {styles.input} placeholder = "First-Name" maxLength = {20} returnKeyType ="next"
+                 keyboardType = "default" autoCapitalize ="none" autoCorrect ={false}
+                onChangeText = {(first_name)=>this.setState({first_name})}
+                value= {this.state.first_name}/>
+                <TextInput style = {styles.input} placeholder = "Last-Name" maxLength = {20} returnKeyType ="next"
+                 keyboardType = "default" autoCapitalize ="none" autoCorrect ={false}
+                onChangeText = {(last_name)=>this.setState({last_name})}
+                value= {this.state.last_name}/>
+
+            
                 <TouchableOpacity style= {styles.buttonContainer} onPress={()=> this._signin()}> 
                     <Text style = {styles.buttonText}>
-                        LOGIN
+                        SUBMIT
                     </Text>
                 </TouchableOpacity>
             </View>
+            
         );
     }
 
@@ -69,6 +92,8 @@ const styles = StyleSheet.create({
         marginBottom : 15 ,
         borderRadius : 5,
         paddingHorizontal :10,
+        borderBottomColor :"black",
+        borderBottomWidth: 1
         
     },
     buttonContainer:{
@@ -85,4 +110,4 @@ const styles = StyleSheet.create({
     }
 
 })
-export default LoginForm
+export default DataForm

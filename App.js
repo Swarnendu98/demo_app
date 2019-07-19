@@ -8,15 +8,17 @@ import {Image}from 'react-native'
 import SettingsComponent from './src/settings'
 import LoginScreen from './src/login'
 import AuthLoadingScreen from './src/authentication'
+import {AsyncStorage} from '@react-native-community/async-storage'
 
 
 
 const AuthStack= createStackNavigator({
-  Login : LoginScreen
+  Login : LoginScreen,
+ 
 })
 const HomeStack = createBottomTabNavigator({
 
-  Home :HomeScreen,
+  Home  : HomeScreen,
   Users : UserScreen
 })
 
@@ -27,7 +29,8 @@ const AppNavigator = createSwitchNavigator({
 },
 {
   headerMode :'none',
-  initialRouteName : 'Auth'
+  initialRouteName : 'AuthLoading',
+  
 
 })
 
